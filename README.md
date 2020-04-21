@@ -1,6 +1,6 @@
 # GroupMe Favorites Counter
 
-This project is a basic script written in Node.js which can be used to count the number of favorites received by each user in a GroupMe chat over a pretermined period of time. It requires Node.js version 7.6 or higher. Follow the steps below to install and run the script.
+This project is a basic script written in Node.js which can be used to count the number of favorites received by each user in a GroupMe chat over a predetermined period of time. It requires Node.js version 7.6 or higher. Follow the steps below to install and run the script.
 
 ### Step 1 - Clone the repository, then change into the directory
 ```
@@ -16,7 +16,7 @@ cd groupme-favorites-counter
 // ***************** CHANGE THESE VALUES *****************
 const GROUPME_API_KEY = '<YOUR API KEY>';
 const GROUPME_GROUP_ID = '<YOUR GROUP ID>';
-const TARGET_DATE = moment().subtract(10, 'days'); // Set the time window you'd like to count favorites for
+const TARGET_DATE = moment().subtract(10, 'days'); // Set the time window moment object to tell the script when to stop 
 // *******************************************************
 ```
 

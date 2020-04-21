@@ -4,7 +4,7 @@ const moment = require('moment');
 // ***************** CHANGE THESE VALUES *****************
 const GROUPME_API_KEY = '<YOUR API KEY>';
 const GROUPME_GROUP_ID = '<YOUR GROUP ID>';
-const TARGET_DATE = moment().subtract(10, 'days'); // Set the time window you'd like to count favorites for
+const TARGET_DATE = moment().subtract(10, 'days'); // Set the time window moment object to tell the script when to stop
 // *******************************************************
 
 const createRoute = (endpoint='', params='') => {
@@ -28,14 +28,13 @@ async function getFavoriteCounts() {
             if (before_id) {
                 params.before_id = before_id;
             }
-            const res = await axios.get(createRoute('/messages', params));
-            const messages = res.data.response.messages;
+            const { data: { response: { messages } } } = await axios.get(createRoute('/messages', params));
             if (!messages || messages.length === 0) {
                 return favoriteCounts;
             }
             for (let i = 0; i < messages.length; i++) {
                 messageCount++;
-                const { sender_id, favorited_by, created_at, text } = messages[i];
+                const { sender_id, favorited_by, created_at } = messages[i];
                 if (moment(created_at * 1000).isBefore(TARGET_DATE)) {
                     return favoriteCounts;
                 }
