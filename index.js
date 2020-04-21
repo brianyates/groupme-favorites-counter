@@ -28,8 +28,7 @@ async function getFavoriteCounts() {
             if (before_id) {
                 params.before_id = before_id;
             }
-            const res = await axios.get(createRoute('/messages', params));
-            const messages = res.data.response.messages;
+            const { data: { response: { messages } } } = await axios.get(createRoute('/messages', params));
             if (!messages || messages.length === 0) {
                 return favoriteCounts;
             }
