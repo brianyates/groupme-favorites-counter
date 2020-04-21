@@ -4,7 +4,7 @@ const moment = require('moment');
 // ***************** CHANGE THESE VALUES *****************
 const GROUPME_API_KEY = '<YOUR API KEY>';
 const GROUPME_GROUP_ID = '<YOUR GROUP ID>';
-const TARGET_DATE = moment().subtract(10, 'days'); // Set the time window you'd like to count favorites for
+const TARGET_DATE = moment().subtract(10, 'days'); // Set the time window moment object to tell the script when to stop
 // *******************************************************
 
 const createRoute = (endpoint='', params='') => {
