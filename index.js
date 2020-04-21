@@ -73,4 +73,3 @@ getFavoriteCounts()
     console.log(sortedCounts);
 })
 .catch(err => console.log(err.message))
-.finally(() => finished = true)
