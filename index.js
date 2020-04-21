@@ -2,9 +2,9 @@ const axios = require('axios');
 const moment = require('moment');
 
 // ***************** CHANGE THESE VALUES *****************
-const GROUPME_API_KEY = '<YOUR API KEY>';
-const GROUPME_GROUP_ID = '<YOUR GROUP ID>';
-const TARGET_DATE = moment().subtract(10, 'days'); // Set the time window moment object to tell the script when to stop
+const GROUPME_API_KEY = require('./config').GROUPME_API_KEY;
+const GROUPME_GROUP_ID = require('./config').GROUPME_GROUP_ID;
+const TARGET_DATE = moment().subtract(241, 'days'); // Set the time window moment object to tell the script when to stop
 const SORT_PARAMETER = 'favoritesGiven'; // Possible options are 'favoritesGiven', 'favoritesReceived', 'totalMessages', 'ratio'
 // *******************************************************
 
