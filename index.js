@@ -5,6 +5,7 @@ const moment = require('moment');
 const GROUPME_API_KEY = '<YOUR API KEY>';
 const GROUPME_GROUP_ID = '<YOUR GROUP ID>';
 const TARGET_DATE = moment().subtract(10, 'days'); // Set the time window moment object to tell the script when to stop
+const SORT_PARAMETER = 'favoritesGiven'; // Possible options are 'favoritesGiven', 'favoritesReceived', 'totalMessages', 'ratio'
 // *******************************************************
 
 const createRoute = (endpoint='', params='') => {
@@ -20,7 +21,7 @@ async function getFavoriteCounts() {
         let favoriteCounts = {};
         const { data: { response: { members } } } = await axios.get(createRoute());
         members.forEach(({ user_id, nickname }) => {
-            favoriteCounts[user_id] = { nickname, favoritesReceived: 0, totalMessages: 0 };
+            favoriteCounts[user_id] = { nickname, favoritesReceived: 0, totalMessages: 0, favoritesGiven: 0 };
         });
         let before_id;
         let params = { limit: 100 };
@@ -41,6 +42,11 @@ async function getFavoriteCounts() {
                 if (favoriteCounts[sender_id]) {
                     favoriteCounts[sender_id].totalMessages += 1;
                     favoriteCounts[sender_id].favoritesReceived += favorited_by.length;
+                    favorited_by.forEach(user_id => {
+                        if (favoriteCounts[user_id]) {
+                            favoriteCounts[user_id].favoritesGiven += 1;
+                        }
+                    })
                 }
             }
             process.stdout.write(`Fetching messages: ${messageCount} total messages processed\r`);
@@ -61,11 +67,12 @@ getFavoriteCounts()
             nickname: favoriteCounts[key].nickname, 
             favoritesReceived: favoriteCounts[key].favoritesReceived,
             totalMessages: favoriteCounts[key].totalMessages,
-            ratio: favoriteCounts[key].favoritesReceived / favoriteCounts[key].totalMessages
+            favoritesGiven: favoriteCounts[key].favoritesGiven,
+            ratio: favoriteCounts[key].totalMessages > 0 ? favoriteCounts[key].favoritesReceived / favoriteCounts[key].totalMessages : 0
         }
     })
     .sort((a, b) => {
-        if (a.ratio > b.ratio) {
+        if (a[SORT_PARAMETER] > b[SORT_PARAMETER]) {
             return -1;
         }
         return 1;
