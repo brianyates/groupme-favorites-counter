@@ -20,7 +20,7 @@ async function getFavoriteCounts() {
         let favoriteCounts = {};
         const { data: { response: { members } } } = await axios.get(createRoute());
         members.forEach(({ user_id, nickname }) => {
-            favoriteCounts[user_id] = { nickname, favoritesReceived: 0 };
+            favoriteCounts[user_id] = { nickname, favoritesReceived: 0, totalMessages: 0 };
         });
         let before_id;
         let params = { limit: 100 };
@@ -40,6 +40,7 @@ async function getFavoriteCounts() {
                     return favoriteCounts;
                 }
                 if (favoriteCounts[sender_id]) {
+                    favoriteCounts[sender_id].totalMessages += 1;
                     favoriteCounts[sender_id].favoritesReceived += favorited_by.length;
                 }
             }
@@ -59,15 +60,17 @@ getFavoriteCounts()
     .map(key => {
         return {
             nickname: favoriteCounts[key].nickname, 
-            favoritesReceived: favoriteCounts[key].favoritesReceived
+            favoritesReceived: favoriteCounts[key].favoritesReceived,
+            totalMessages: favoriteCounts[key].totalMessages,
+            ratio: favoriteCounts[key].favoritesReceived / favoriteCounts[key].totalMessages
         }
     })
     .sort((a, b) => {
-        if (a.favoritesReceived > b.favoritesReceived) {
+        if (a.ratio > b.ratio) {
             return -1;
         }
         return 1;
     })
-    console.log(sortedCounts);
+    console.log(sortedCounts.map(item => ({...item, ratio: item.ratio.toFixed(2)})));
 })
 .catch(err => console.log(err.message))
