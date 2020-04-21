@@ -35,7 +35,7 @@ async function getFavoriteCounts() {
             }
             for (let i = 0; i < messages.length; i++) {
                 messageCount++;
-                const { sender_id, favorited_by, created_at, text } = messages[i];
+                const { sender_id, favorited_by, created_at } = messages[i];
                 if (moment(created_at * 1000).isBefore(TARGET_DATE)) {
                     return favoriteCounts;
                 }
