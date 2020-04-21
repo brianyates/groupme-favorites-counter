@@ -1,6 +1,6 @@
 # GroupMe Favorites Counter
 
-This script requires Node.js version 7.6 or higher. 
+This project is a basic script written in Node.js which can be used to count the number of favorites received by each user in a GroupMe chat over a pretermined period of time. It requires Node.js version 7.6 or higher. Follow the steps below to install and run the script.
 
 ### Step 1 - Clone the repository, then change into the directory
 ```
