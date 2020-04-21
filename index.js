@@ -23,8 +23,8 @@ async function getFavoriteCounts() {
             favoriteCounts[user_id] = { nickname, favoritesReceived: 0 };
         });
         let before_id;
+        let params = { limit: 100 };
         while (true) {
-            let params = { limit: 100 };
             if (before_id) {
                 params.before_id = before_id;
             }
