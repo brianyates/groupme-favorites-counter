@@ -22,8 +22,8 @@ async function getFavoriteCounts() {
         members.forEach(({ user_id, nickname }) => {
             favoriteCounts[user_id] = { nickname, favoritesReceived: 0 };
         });
-        let before_id = '';
-        do {
+        let before_id;
+        while (true) {
             let params = { limit: 100 };
             if (before_id) {
                 params.before_id = before_id;
@@ -46,8 +46,6 @@ async function getFavoriteCounts() {
             process.stdout.write(`Fetching messages: ${messageCount} total messages processed\r`);
             before_id = messages.slice(-1)[0].id;
         }
-        while (true);
-        return favoriteCounts;
     }
     catch (err) {
         throw err;
