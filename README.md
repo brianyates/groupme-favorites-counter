@@ -3,8 +3,10 @@
 This script requires Node.js version 7.6 or higher. 
 
 ### Step 1 - Clone the repository, then change into the directory
-`git clone https://github.com/brianyates/groupme-favorites-counter.git`
-`cd groupme-favorites-counter`
+```
+git clone https://github.com/brianyates/groupme-favorites-counter.git
+cd groupme-favorites-counter
+```
 
 ### Step 2 - Install dependencies
 `npm install`
